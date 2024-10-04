@@ -110,6 +110,10 @@ vim.opt.mouse = 'a'
 -- Don't show the mode, since it's already in the status line
 vim.opt.showmode = false
 
+-- Recommended by neovimtree plugin
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+
 -- Sync clipboard between OS and Neovim.
 --  Schedule the setting after `UiEnter` because it can increase startup-time.
 --  Remove this option if you want your OS clipboard to remain independent.
@@ -191,11 +195,19 @@ vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to the lower win
 vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to the upper window' })
 
 -- Custom keymap
-vim.keymap.set('n', '<leader>e', vim.cmd.Ex, { desc = 'Go to explorer' })
+-- vim.keymap.set('n', '<leader>e', vim.cmd.Ex, { desc = 'Go to explorer' })
 
 vim.keymap.set('i', '{', '{}<Esc>i', { noremap = true })
 vim.keymap.set('i', '(', '()<Esc>i', { noremap = true })
 vim.keymap.set('i', '[', '[]<Esc>i', { noremap = true })
+vim.keymap.set('i', "'", "''<Esc>i", { noremap = true })
+vim.keymap.set('i', '"', '""<Esc>i', { noremap = true })
+
+vim.keymap.set('n', '<C-d>', '<C-d>zz', { noremap = true })
+vim.keymap.set('n', '<C-u>', '<C-u>zz', { noremap = true })
+
+vim.keymap.set('n', '<C-1>', ':NvimTreeFocus<NL>', { desc = 'Toggle file tree' })
+vim.keymap.set('i', '<C-1>', ':NvimTreeFocus<NL>', { desc = 'Toggle file tree' })
 
 -- [[ Basic Autocommands ]]
 --  See `:help lua-guide-autocommands`
@@ -913,6 +925,13 @@ require('lazy').setup({
     --    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
     --    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
     --    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+  },
+  {
+    'nvim-tree/nvim-tree.lua',
+    dependencies = {},
+    config = function()
+      require('nvim-tree').setup {}
+    end,
   },
 
   -- The following two comments only work if you have downloaded the kickstart repo, not just copy pasted the
